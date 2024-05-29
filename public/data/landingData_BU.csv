@@ -1,0 +1,71 @@
+DATA_TYPE,CALENDAR,DESCR1,VALUE1,VALUE2,VALUE3
+Enrollment,Fall 2014,,1118,,
+Enrollment,Fall 2015,,1177,,
+Enrollment,Fall 2016,,1205,,
+Enrollment,Fall 2017,,1215,,
+Enrollment,Fall 2018,,1241,,
+Enrollment,Fall 2019,,1237,,
+Enrollment,Fall 2020,,1214,,
+Enrollment,Fall 2021,,1300,,
+Enrollment,Fall 2022,,1475,,
+Enrollment,Fall 2023,,1605,,
+Degrees,2013-14,,243,,
+Degrees,2014-15,,280,,
+Degrees,2015-16,,254,,
+Degrees,2016-17,,258,,
+Degrees,2017-18,,251,,
+Degrees,2018-19,,302,,
+Degrees,2019-20,,348,,
+Degrees,2020-21,,307,,
+Degrees,2021-22,,297,,
+Degrees,2022-23,,320,,
+Retention,Fall 2014,Fall 2013 to Fall 2014,0.6533333333,98,150
+Retention,Fall 2015,Fall 2014 to Fall 2015,0.7323943662,104,142
+Retention,Fall 2016,Fall 2015 to Fall 2016,0.7236180905,144,199
+Retention,Fall 2017,Fall 2016 to Fall 2017,0.7346938776,144,196
+Retention,Fall 2018,Fall 2017 to Fall 2018,0.7237569061,131,181
+Retention,Fall 2019,Fall 2018 to Fall 2019,0.7393939394,122,165
+Retention,Fall 2020,Fall 2019 to Fall 2020,0.7924528302,126,159
+Retention,Fall 2021,Fall 2020 to Fall 2021,0.7205882353,98,136
+Retention,Fall 2022,Fall 2021 to Fall 2022,0.8112244898,159,196
+Retention,Fall 2023,Fall 2022 to Fall 2023,0.7761904762,163,210
+RetentionSPR,Fall 2015,Fall 2014 to Spring 2015,0.8943661972,127,142
+RetentionSPR,Fall 2016,Fall 2015 to Spring 2016,0.8994974874,179,199
+RetentionSPR,Fall 2017,Fall 2016 to Spring 2017,0.9183673469,180,196
+RetentionSPR,Fall 2018,Fall 2017 to Spring 2018,0.8784530387,159,181
+RetentionSPR,Fall 2019,Fall 2018 to Spring 2019,0.8424242424,139,165
+RetentionSPR,Fall 2020,Fall 2019 to Spring 2020,0.8867924528,141,159
+RetentionSPR,Fall 2021,Fall 2020 to Spring 2021,0.8602941176,117,136
+RetentionSPR,Fall 2022,Fall 2021 to Spring 2022,0.887755102,174,196
+RetentionSPR,Fall 2023,Fall 2022 to Spring 2023,0.8904761905,187,210
+RetentionSPR,Fall 2024,Fall 2023 to Spring 2024,0.8928571429,175,196
+Graduation,Fall 2008,6 year graduation rate,0.5027624309,91,181
+Graduation,Fall 2009,6 year graduation rate,0.45,54,120
+Graduation,Fall 2010,6 year graduation rate,0.5583333333,67,120
+Graduation,Fall 2011,6 year graduation rate,0.4390243902,54,123
+Graduation,Fall 2012,6 year graduation rate,0.5208333333,75,144
+Graduation,Fall 2013,6 year graduation rate,0.4466666667,67,150
+Graduation,Fall 2014,6 year graduation rate,0.5352112676,76,142
+Graduation,Fall 2015,6 year graduation rate,0.527638191,105,199
+Graduation,Fall 2016,6 year graduation rate,0.5867346939,115,196
+Graduation,Fall 2017,6 year graduation rate,0.5414364641,98,181
+Progression,Fall 2014,,0.4806273063,521,1084
+Progression,Fall 2015,,0.488372093,546,1118
+Progression,Fall 2016,,0.4808836024,566,1177
+Progression,Fall 2017,,0.5136929461,619,1205
+Progression,Fall 2018,,0.5465020576,664,1215
+Progression,Fall 2019,,0.5229653505,649,1241
+Progression,Fall 2020,,0.5658852061,700,1237
+Progression,Fall 2021,,0.5090609555,618,1214
+Progression,Fall 2022,,0.4907692308,638,1300
+Progression,Fall 2023,,0.4454237288,657,1475
+DFW,2014-15,,0.1308332328,1085,8293
+DFW,2015-16,,0.129397734,1085,8385
+DFW,2016-17,,0.1042063937,929,8915
+DFW,2017-18,,0.1045625335,974,9315
+DFW,2018-19,,0.1059898477,1044,9850
+DFW,2019-20,,0.0799463586,775,9694
+DFW,2020-21,,0.1130095923,1131,10008
+DFW,2021-22,,0.0946010058,997,10539
+DFW,2022-23,,0.086266208,978,11337
+DFW,2023-24,,0.0735879077,925,12570
