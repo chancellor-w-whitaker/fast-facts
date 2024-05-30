@@ -24,6 +24,11 @@ import { dataTypes } from "./js/dataTypes";
 import { dataKeys } from "./js/dataKeys";
 import { Nav } from "./components/Nav";
 
+// ? find all caps font
+// ! put in template
+// ! move dropdown to middle or left
+// ! make sure numbers fit in bar well
+
 function App() {
   const [fileID, setFileID] = useState(initialFileID);
 
@@ -36,8 +41,6 @@ function App() {
   const dropdownItems = useMemo(() => updateDropdownItems(fileID), [fileID]);
 
   const onDropdownItemClick = useCallback((id) => setFileID(id), []);
-
-  console.log(chartsData);
 
   return (
     <>
@@ -54,14 +57,17 @@ function App() {
           </Nav>
         </BrandBar>
         <Section>
-          <div className="container bd-example-row">
+          <div className="container bd-example-row small">
             <div className="row row-cols-1 row-cols-lg-2">
               {chartsData.map(({ title, data, id }) => {
                 const { numberType } = dataTypes[id];
 
                 const valueFormatters = {
                   rate: (value) =>
-                    value.toLocaleString(undefined, { style: "percent" }),
+                    value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      style: "percent",
+                    }),
                   whole: (value) => value.toLocaleString(),
                 };
 
@@ -73,103 +79,73 @@ function App() {
 
                 return (
                   <div className="col" key={id}>
-                    <h2>{title}</h2>
-                    <ResponsiveContainer height={300}>
-                      <BarChart data={data}>
-                        <XAxis dataKey={xAxisDataKey} />
-                        <YAxis tickFormatter={valueFormatter} />
-                        <Tooltip formatter={valueFormatter} />
-                        <Bar dataKey={barDataKey} fill="seagreen">
-                          <LabelList
-                            formatter={valueFormatter}
-                            dataKey={barDataKey}
-                            position="insideTop"
-                            fill="white"
-                          />
-                          <LabelList dataKey={xAxisDataKey} position="top" />
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
+                    <h5 className="text-uppercase fw-bold">{title}</h5>
+                    <Chart
+                      barLabel={{
+                        formatter: valueFormatter,
+                        position: "insideTop",
+                        fill: "white",
+                      }}
+                      valueFormatter={valueFormatter}
+                      xAxisDataKey={xAxisDataKey}
+                      barDataKey={barDataKey}
+                      data={data}
+                    ></Chart>
                   </div>
                 );
               })}
             </div>
           </div>
-          {/* <div className="d-flex flex-wrap bd-example-row">
-            {chartsData.map(({ title, id }) => (
-              <div className="col-6" key={id}>
-                <h2 className="pb-2">{title}</h2>
-                <Chart></Chart>
-              </div>
-            ))}
-          </div> */}
         </Section>
       </MainContainer>
     </>
   );
 }
 
-const data = [
-  {
-    name: "Page A",
-    amt: 2400,
-    uv: 4000,
-    pv: 2400,
-  },
-  {
-    name: "Page B",
-    amt: 2210,
-    uv: 3000,
-    pv: 1398,
-  },
-  {
-    name: "Page C",
-    amt: 2290,
-    uv: 2000,
-    pv: 9800,
-  },
-  {
-    name: "Page D",
-    amt: 2000,
-    uv: 2780,
-    pv: 3908,
-  },
-  {
-    name: "Page E",
-    amt: 2181,
-    uv: 1890,
-    pv: 4800,
-  },
-  {
-    name: "Page F",
-    amt: 2500,
-    uv: 2390,
-    pv: 3800,
-  },
-  {
-    name: "Page G",
-    amt: 2100,
-    uv: 3490,
-    pv: 4300,
-  },
-];
+const Chart = ({
+  barFill = "#8884d8",
+  valueFormatter,
+  xAxisDataKey,
+  height = 300,
+  barDataKey,
+  barLabel,
+  data,
+}) => {
+  const [mouseOverPayload, setMouseOverPayload] = useState({});
 
-const Chart = ({ height = 300 }) => {
+  const onMouseOverBar = useCallback(
+    ({ payload }) => setMouseOverPayload(payload),
+    []
+  );
+
+  const onMouseOutBar = useCallback(() => setMouseOverPayload({}), []);
+
+  const topLabelValueAccessor = useCallback(
+    ({ [xAxisDataKey]: xAxisValue, payload }) => {
+      if (mouseOverPayload === payload) {
+        return xAxisValue;
+      }
+    },
+    [xAxisDataKey, mouseOverPayload]
+  );
+
   return (
-    <>
-      <ResponsiveContainer height={height}>
-        <BarChart data={data}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Bar
-            activeBar={<Rectangle stroke="blue" fill="pink" />}
-            fill="#8884d8"
-            dataKey="pv"
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    </>
+    <ResponsiveContainer height={height}>
+      <BarChart data={data}>
+        <XAxis dataKey={xAxisDataKey} />
+        <YAxis tickFormatter={valueFormatter} />
+        <Tooltip formatter={valueFormatter} />
+        <Bar
+          onMouseOver={onMouseOverBar}
+          onMouseOut={onMouseOutBar}
+          dataKey={barDataKey}
+          label={barLabel}
+          fill={barFill}
+        >
+          <LabelList valueAccessor={topLabelValueAccessor} position="top" />
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
