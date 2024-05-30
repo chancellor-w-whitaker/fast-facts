@@ -1,13 +1,9 @@
-import { ekuLogoDimensions } from "../js/ekuLogoDimensions";
+import { EKULogoAspectRatio } from "../js/EKULogoAspectRatio";
 
-export const EKULogo = () => {
+export const EKULogo = ({ height = 38 }) => {
+  const width = height * EKULogoAspectRatio;
+
   return (
-    <img
-      height={ekuLogoDimensions.height}
-      width={ekuLogoDimensions.width}
-      className="me-3"
-      src="eku.svg"
-      alt=""
-    />
+    <img className="me-3" height={height} width={width} src="eku.svg" alt="" />
   );
 };

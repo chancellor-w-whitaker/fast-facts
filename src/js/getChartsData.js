@@ -18,11 +18,7 @@ export const getChartsData = (csvText) => {
   });
 
   const result = Object.entries(container)
-    .map(([id, data]) => ({
-      title: dataTypes[id]?.title,
-      data,
-      id,
-    }))
+    .map(([id, data]) => ({ title: dataTypes[id]?.title, data, id }))
     .filter(({ title }) => title !== undefined);
 
   return result;

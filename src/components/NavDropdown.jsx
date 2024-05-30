@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
-import { NavDropdownItem } from "./NavDropdownItem";
 import { usePopover } from "../hooks/usePopover";
+import { DropdownItem } from "./DropdownItem";
 
-export const NavDropdown = ({ onItemClick, children, items }) => {
+export const NavDropdown = ({ onItemClick, items = [], children }) => {
   const { popover, isOpen, toggle } = usePopover();
 
   const open = useCallback(
@@ -18,7 +18,7 @@ export const NavDropdown = ({ onItemClick, children, items }) => {
   return (
     <li className="nav-item dropdown">
       <a
-        className="nav-link link-light fs-4 dropdown-toggle"
+        className="nav-link text-light fs-5 dropdown-toggle"
         onClick={open}
         role="button"
         href="#"
@@ -26,16 +26,12 @@ export const NavDropdown = ({ onItemClick, children, items }) => {
         {children}
       </a>
       {isOpen && (
-        <ul
-          className="dropdown-menu shadow-sm show position-absolute end-0"
-          ref={popover}
-        >
-          {Array.isArray(items) &&
-            items.map(({ id, ...rest }) => (
-              <li onClick={() => onItemClick(id)} key={id}>
-                <NavDropdownItem {...rest}></NavDropdownItem>
-              </li>
-            ))}
+        <ul className="dropdown-menu shadow-sm show end-0" ref={popover}>
+          {items.map(({ children, active, id }) => (
+            <li onClick={() => onItemClick(id)} key={id}>
+              <DropdownItem active={active}>{children}</DropdownItem>
+            </li>
+          ))}
         </ul>
       )}
     </li>
