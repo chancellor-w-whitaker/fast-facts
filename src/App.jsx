@@ -6,6 +6,7 @@ import {
   Tooltip,
   YAxis,
   XAxis,
+  Cell,
   Bar,
 } from "recharts";
 import { useCallback, useState, useMemo } from "react";
@@ -103,7 +104,6 @@ function App() {
 }
 
 const Chart = ({
-  barFill = "#8884d8",
   valueFormatter,
   xAxisDataKey,
   height = 300,
@@ -129,20 +129,23 @@ const Chart = ({
     [xAxisDataKey, mouseOverPayload]
   );
 
+  const fillCell = (payload) =>
+    payload === mouseOverPayload ? "#82ca9d" : "#8884d8";
+
   return (
     <ResponsiveContainer height={height}>
       <BarChart data={data}>
         <XAxis dataKey={xAxisDataKey} />
         <YAxis tickFormatter={valueFormatter} />
-        {/* <Tooltip formatter={valueFormatter} /> */}
         <Bar
-          activeBar={<Rectangle fill="pink" />}
           onMouseOver={onMouseOverBar}
           onMouseOut={onMouseOutBar}
           dataKey={barDataKey}
           label={barLabel}
-          fill={barFill}
         >
+          {data.map((payload, index) => (
+            <Cell fill={fillCell(payload)} key={`cell-${index}`} />
+          ))}
           <LabelList valueAccessor={topLabelValueAccessor} position="top" />
         </Bar>
       </BarChart>
