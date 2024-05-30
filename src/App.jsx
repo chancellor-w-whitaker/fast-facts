@@ -134,8 +134,9 @@ const Chart = ({
       <BarChart data={data}>
         <XAxis dataKey={xAxisDataKey} />
         <YAxis tickFormatter={valueFormatter} />
-        <Tooltip formatter={valueFormatter} />
+        {/* <Tooltip formatter={valueFormatter} /> */}
         <Bar
+          activeBar={<Rectangle fill="pink" />}
           onMouseOver={onMouseOverBar}
           onMouseOut={onMouseOutBar}
           dataKey={barDataKey}
