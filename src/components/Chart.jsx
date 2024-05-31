@@ -17,32 +17,38 @@ export const Chart = ({
   barLabel,
   data,
 }) => {
-  const [mouseOverPayload, setMouseOverPayload] = useState({});
+  const [mouseOverEvent, setMouseOverEvent] = useState({ payload: {} });
 
-  const onMouseOverBar = useCallback(
-    ({ payload }) => setMouseOverPayload(payload),
+  const mouseOverEventPayload = mouseOverEvent.payload;
+
+  const onMouseOverBar = useCallback((e) => setMouseOverEvent(e), []);
+
+  const onMouseOutBar = useCallback(
+    () => setMouseOverEvent({ payload: {} }),
     []
   );
 
-  const onMouseOutBar = useCallback(() => setMouseOverPayload({}), []);
-
   const topLabelValueAccessor = useCallback(
     ({ [xAxisDataKey]: xAxisValue, payload }) => {
-      if (mouseOverPayload === payload) {
+      if (mouseOverEventPayload === payload) {
         return xAxisValue;
       }
     },
-    [xAxisDataKey, mouseOverPayload]
+    [xAxisDataKey, mouseOverEventPayload]
   );
 
   const fillCell = (payload) =>
-    payload === mouseOverPayload ? "#82ca9d" : "#8884d8";
+    payload === mouseOverEventPayload ? "#82ca9d" : "#8884d8";
 
   return (
     <ResponsiveContainer height={height}>
       <BarChart data={data}>
         <XAxis dataKey={xAxisDataKey} />
         <YAxis tickFormatter={valueFormatter} />
+        {/* <Tooltip
+          position={{ x: mouseOverEvent?.x, y: mouseOverEvent?.y }}
+          formatter={valueFormatter}
+        ></Tooltip> */}
         <Bar
           onMouseOver={onMouseOverBar}
           onMouseOut={onMouseOutBar}

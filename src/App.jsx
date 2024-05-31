@@ -21,6 +21,7 @@ import { Nav } from "./components/Nav";
 // ! put in template
 // ! move dropdown to middle or left
 // ! make sure numbers fit in bar well
+// ! would it be possible to set the position of the tooltip instead?
 
 function App() {
   const [fileID, setFileID] = useState(initialFileID);
