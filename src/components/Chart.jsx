@@ -2,12 +2,16 @@ import {
   ResponsiveContainer,
   LabelList,
   BarChart,
+  Tooltip,
   YAxis,
   XAxis,
   Cell,
   Bar,
 } from "recharts";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
+
+import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
+import { CustomTooltip } from "./CustomTooltip";
 
 export const Chart = ({
   valueFormatter,
@@ -17,48 +21,40 @@ export const Chart = ({
   barLabel,
   data,
 }) => {
-  const [mouseOverEvent, setMouseOverEvent] = useState({ payload: {} });
+  const { trackMouseOverBar, mouseOverBarEvent, isMouseOverBar } =
+    useMouseOverRechartsBar();
 
-  const mouseOverEventPayload = mouseOverEvent.payload;
+  const { width = 0, x = 0, y = 0 } = mouseOverBarEvent;
 
-  const onMouseOverBar = useCallback((e) => setMouseOverEvent(e), []);
+  const tooltipPosition = { x: x + width / 2, y };
 
-  const onMouseOutBar = useCallback(
-    () => setMouseOverEvent({ payload: {} }),
-    []
-  );
-
-  const topLabelValueAccessor = useCallback(
+  const applyLabelToMouseOverBar = useCallback(
     ({ [xAxisDataKey]: xAxisValue, payload }) => {
-      if (mouseOverEventPayload === payload) {
-        return xAxisValue;
-      }
+      if (isMouseOverBar(payload)) return xAxisValue;
     },
-    [xAxisDataKey, mouseOverEventPayload]
+    [xAxisDataKey, isMouseOverBar]
   );
 
   const fillCell = (payload) =>
-    payload === mouseOverEventPayload ? "#82ca9d" : "#8884d8";
+    isMouseOverBar(payload) ? "#82ca9d" : "#8884d8";
 
   return (
     <ResponsiveContainer height={height}>
       <BarChart data={data}>
         <XAxis dataKey={xAxisDataKey} />
         <YAxis tickFormatter={valueFormatter} />
-        {/* <Tooltip
-          position={{ x: mouseOverEvent?.x, y: mouseOverEvent?.y }}
+        <Tooltip
+          content={<CustomTooltip></CustomTooltip>}
           formatter={valueFormatter}
-        ></Tooltip> */}
-        <Bar
-          onMouseOver={onMouseOverBar}
-          onMouseOut={onMouseOutBar}
-          dataKey={barDataKey}
-          label={barLabel}
-        >
+          position={tooltipPosition}
+          isAnimationActive={false}
+          active={width > 0}
+        ></Tooltip>
+        <Bar {...trackMouseOverBar} dataKey={barDataKey} label={barLabel}>
           {data.map((payload, index) => (
             <Cell fill={fillCell(payload)} key={`cell-${index}`} />
           ))}
-          <LabelList valueAccessor={topLabelValueAccessor} position="top" />
+          <LabelList valueAccessor={applyLabelToMouseOverBar} position="top" />
         </Bar>
       </BarChart>
     </ResponsiveContainer>

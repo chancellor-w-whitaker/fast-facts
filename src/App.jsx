@@ -58,7 +58,7 @@ function App() {
           </Nav>
         </BrandBar>
         <Section>
-          <RowColsGrid className="bd-example-row small" rowCols={rowCols}>
+          <RowColsGrid className="bd-example-row" rowCols={rowCols}>
             {chartsData.map(({ title, data, id }) => {
               const { numberType } = dataTypes[id];
 
@@ -72,7 +72,7 @@ function App() {
 
               return (
                 <Fragment key={id}>
-                  <h5 className="text-uppercase fw-bold">{title}</h5>
+                  <h6 className="text-uppercase fw-bold">{title}</h6>
                   <Chart
                     {...{
                       valueFormatter,
