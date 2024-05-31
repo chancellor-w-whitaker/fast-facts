@@ -1,20 +1,11 @@
-import {
-  ResponsiveContainer,
-  Rectangle,
-  LabelList,
-  BarChart,
-  Tooltip,
-  YAxis,
-  XAxis,
-  Cell,
-  Bar,
-} from "recharts";
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, Fragment, useMemo } from "react";
 
 import { updateDropdownItems } from "./js/updateDropdownItems";
 import { MainContainer } from "./components/MainContainer";
 import { useResponseText } from "./hooks/useResponseText";
 import { NavDropdown } from "./components/NavDropdown";
+import { valueFormatters } from "./js/valueFormatters";
+import { RowColsGrid } from "./components/RowColsGrid";
 import { getChartsData } from "./js/getChartsData";
 import { initialFileID } from "./js/initialFileID";
 import { BrandBar } from "./components/BrandBar";
@@ -22,6 +13,7 @@ import { EKULogo } from "./components/EKULogo";
 import { Section } from "./components/Section";
 import { dataFiles } from "./js/dataFiles";
 import { dataTypes } from "./js/dataTypes";
+import { Chart } from "./components/Chart";
 import { dataKeys } from "./js/dataKeys";
 import { Nav } from "./components/Nav";
 
@@ -43,6 +35,13 @@ function App() {
 
   const onDropdownItemClick = useCallback((id) => setFileID(id), []);
 
+  const { xAxis: xAxisDataKey, bar: barDataKey } = dataKeys;
+
+  const rowCols = useMemo(
+    () => [{ span: 1 }, { breakpoint: "lg", span: 2 }],
+    []
+  );
+
   return (
     <>
       <MainContainer>
@@ -58,99 +57,38 @@ function App() {
           </Nav>
         </BrandBar>
         <Section>
-          <div className="container bd-example-row small">
-            <div className="row row-cols-1 row-cols-lg-2">
-              {chartsData.map(({ title, data, id }) => {
-                const { numberType } = dataTypes[id];
+          <RowColsGrid className="bd-example-row small" rowCols={rowCols}>
+            {chartsData.map(({ title, data, id }) => {
+              const { numberType } = dataTypes[id];
 
-                const valueFormatters = {
-                  rate: (value) =>
-                    value.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      style: "percent",
-                    }),
-                  whole: (value) => value.toLocaleString(),
-                };
+              const valueFormatter = valueFormatters[numberType];
 
-                const [valueFormatter, xAxisDataKey, barDataKey] = [
-                  valueFormatters[numberType],
-                  dataKeys.xAxis,
-                  dataKeys.bar,
-                ];
+              const barLabel = {
+                formatter: valueFormatter,
+                position: "insideTop",
+                fill: "white",
+              };
 
-                return (
-                  <div className="col" key={id}>
-                    <h5 className="text-uppercase fw-bold">{title}</h5>
-                    <Chart
-                      barLabel={{
-                        formatter: valueFormatter,
-                        position: "insideTop",
-                        fill: "white",
-                      }}
-                      valueFormatter={valueFormatter}
-                      xAxisDataKey={xAxisDataKey}
-                      barDataKey={barDataKey}
-                      data={data}
-                    ></Chart>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+              return (
+                <Fragment key={id}>
+                  <h5 className="text-uppercase fw-bold">{title}</h5>
+                  <Chart
+                    {...{
+                      valueFormatter,
+                      xAxisDataKey,
+                      barDataKey,
+                      barLabel,
+                      data,
+                    }}
+                  ></Chart>
+                </Fragment>
+              );
+            })}
+          </RowColsGrid>
         </Section>
       </MainContainer>
     </>
   );
 }
-
-const Chart = ({
-  valueFormatter,
-  xAxisDataKey,
-  height = 300,
-  barDataKey,
-  barLabel,
-  data,
-}) => {
-  const [mouseOverPayload, setMouseOverPayload] = useState({});
-
-  const onMouseOverBar = useCallback(
-    ({ payload }) => setMouseOverPayload(payload),
-    []
-  );
-
-  const onMouseOutBar = useCallback(() => setMouseOverPayload({}), []);
-
-  const topLabelValueAccessor = useCallback(
-    ({ [xAxisDataKey]: xAxisValue, payload }) => {
-      if (mouseOverPayload === payload) {
-        return xAxisValue;
-      }
-    },
-    [xAxisDataKey, mouseOverPayload]
-  );
-
-  const fillCell = (payload) =>
-    payload === mouseOverPayload ? "#82ca9d" : "#8884d8";
-
-  return (
-    <ResponsiveContainer height={height}>
-      <BarChart data={data}>
-        <XAxis dataKey={xAxisDataKey} />
-        <YAxis tickFormatter={valueFormatter} />
-        <Bar
-          onMouseOver={onMouseOverBar}
-          onMouseOut={onMouseOutBar}
-          dataKey={barDataKey}
-          label={barLabel}
-        >
-          {data.map((payload, index) => (
-            <Cell fill={fillCell(payload)} key={`cell-${index}`} />
-          ))}
-          <LabelList valueAccessor={topLabelValueAccessor} position="top" />
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
 
 export default App;
