@@ -32,6 +32,10 @@ const purple = "#800080";
 
 const tryGradient = true;
 
+const barLabelPosition = "insideTop";
+
+const tooltipCursor = { fill: "transparent" };
+
 export const CustomBarChart = ({
   activeBarColor = kentuckyBluegrass,
   barColor = purple,
@@ -59,10 +63,10 @@ export const CustomBarChart = ({
   );
 
   const barLabel = {
+    position: barLabelPosition,
     formatter: valueFormatter,
-    position: "insideTop",
+    fill: solidWhite,
     fillOpacity: 1,
-    fill: "white",
   };
 
   const yValues = data.map(({ [barDataKey]: value }) => value);
@@ -107,6 +111,7 @@ export const CustomBarChart = ({
           formatter={valueFormatter}
           position={tooltipPosition}
           isAnimationActive={false}
+          cursor={tooltipCursor}
           active={tooltipActive}
         ></Tooltip>
         <Bar {...trackMouseOverBar} dataKey={barDataKey} label={barLabel}>
