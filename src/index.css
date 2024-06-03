@@ -1,5 +1,5 @@
 body {
-  --callout-size: -15px;
+  --callout-size: 15px;
 }
 
 .bg-eku-maroon {
@@ -65,7 +65,7 @@ body {
   display: block;
   width: 0;
   content: "";
-  border: 15px solid transparent;
+  border: var(--callout-size) solid transparent;
 }
 
 /* (C) "CALLOUT" DIRECTIONS */
@@ -95,21 +95,21 @@ body {
   position: absolute;
 }
 .speech.up::after {
-  top: var(--callout-size);
-  left: calc(50% + var(--callout-size));
+  top: calc(-1 * var(--callout-size));
+  left: calc(50% - var(--callout-size));
 }
 .speech.down::after {
-  bottom: var(--callout-size);
-  left: calc(50% + var(--callout-size));
+  bottom: calc(-1 * var(--callout-size));
+  left: calc(50% - var(--callout-size));
 }
 .speech.left::after {
-  left: var(--callout-size);
-  top: calc(50% + var(--callout-size));
+  left: calc(-1 * var(--callout-size));
+  top: calc(50% - var(--callout-size));
 }
 .speech.right::after {
-  right: var(--callout-size);
-  top: calc(50% + var(--callout-size));
+  right: calc(-1 * var(--callout-size));
+  top: calc(50% - var(--callout-size));
 }
 .speech.down.offset-callout {
-  transform: translateY(var(--callout-size));
+  transform: translateY(calc(-1 * var(--callout-size)));
 }
