@@ -10,12 +10,13 @@ import {
 
 import { getTooltipPositionPreTranslation } from "../js/getTooltipPositionPreTranslation";
 import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
+import { normalizeValue } from "../js/normalizeValue";
 import { CustomTooltip } from "./CustomTooltip";
 import { getDomain } from "../js/getDomain";
 
 export const CustomBarChart = ({
   activeBarColor = "#009681",
-  barColor = "purple",
+  barColor = "#dc5829",
   valueFormatter,
   xAxisDataKey,
   height = 300,
@@ -46,17 +47,17 @@ export const CustomBarChart = ({
     fill: "white",
   };
 
-  const fillCell = (payload) =>
-    isActiveBar(payload) ? activeBarColor : barColor;
-
   const yValues = data.map(({ [barDataKey]: value }) => value);
 
   const yAxisDomain = getDomain(yValues);
 
-  const [lowerBound, upperBound] = yAxisDomain;
+  const fillCell = (payload) =>
+    isActiveBar(payload) ? activeBarColor : barColor;
 
-  const getFillOpacity = (yValue) =>
-    (yValue - lowerBound) / (upperBound - lowerBound);
+  const getFillOpacity = (payload) =>
+    !isActiveBar(payload)
+      ? normalizeValue(payload[barDataKey], yAxisDomain)
+      : activeBarColor;
 
   return (
     <ResponsiveContainer height={height}>
@@ -73,9 +74,7 @@ export const CustomBarChart = ({
         <Bar {...trackMouseOverBar} dataKey={barDataKey} label={barLabel}>
           {data.map((payload, index) => (
             <Cell
-              fillOpacity={
-                !isActiveBar(payload) ? getFillOpacity(payload[barDataKey]) : 1
-              }
+              fillOpacity={getFillOpacity(payload)}
               fill={fillCell(payload)}
               key={`cell-${index}`}
             />

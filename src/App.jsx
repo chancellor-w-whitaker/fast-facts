@@ -66,7 +66,7 @@ function App() {
 
               return (
                 <Fragment key={id}>
-                  <h5 className="text-uppercase fw-bold">{title}</h5>
+                  <h6 className="text-uppercase fw-bold">{title}</h6>
                   <CustomBarChart
                     {...{ valueFormatter, xAxisDataKey, barDataKey, data }}
                   ></CustomBarChart>
