@@ -1,2 +1,2 @@
-export const normalizeValue = (value, [lowerBound, upperBound]) =>
+export const normalizeValue = (value, lowerBound, upperBound) =>
   (value - lowerBound) / (upperBound - lowerBound);

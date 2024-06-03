@@ -12,14 +12,32 @@ import { getTooltipPositionPreTranslation } from "../js/getTooltipPositionPreTra
 import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
 import { normalizeValue } from "../js/normalizeValue";
 import { CustomTooltip } from "./CustomTooltip";
+import { brandColors } from "../js/brandColors";
 import { getDomain } from "../js/getDomain";
+import { pSBC } from "../js/pSBC";
+
+const {
+  kentuckyBluegrass,
+  goldenrodYellow,
+  autumnOrange,
+  booneBronze,
+  solidWhite,
+  solidBlack,
+  ekuMaroon,
+  lightGray,
+  darkGray,
+} = brandColors;
+
+const purple = "#800080";
+
+const tryGradient = true;
 
 export const CustomBarChart = ({
-  activeBarColor = "#009681",
-  barColor = "#dc5829",
+  activeBarColor = kentuckyBluegrass,
+  barColor = purple,
   valueFormatter,
   xAxisDataKey,
-  height = 300,
+  height = 250,
   barDataKey,
   data,
 }) => {
@@ -51,13 +69,33 @@ export const CustomBarChart = ({
 
   const yAxisDomain = getDomain(yValues);
 
-  const fillCell = (payload) =>
-    isActiveBar(payload) ? activeBarColor : barColor;
+  const fillCell = (payload) => {
+    const value = payload[barDataKey];
 
-  const getFillOpacity = (payload) =>
-    !isActiveBar(payload)
-      ? normalizeValue(payload[barDataKey], yAxisDomain)
-      : activeBarColor;
+    const normalizedValue = normalizeValue(value, ...yAxisDomain);
+
+    const dimPercentage = 1 - normalizedValue;
+
+    const dimmedColor = pSBC(dimPercentage, barColor);
+
+    return isActiveBar(payload)
+      ? activeBarColor
+      : tryGradient
+      ? dimmedColor
+      : barColor;
+  };
+
+  const getFillOpacity = (payload) => {
+    const value = payload[barDataKey];
+
+    const normalizedValue = normalizeValue(value, ...yAxisDomain);
+
+    return tryGradient
+      ? 1
+      : isActiveBar(payload)
+      ? activeBarColor
+      : normalizedValue;
+  };
 
   return (
     <ResponsiveContainer height={height}>

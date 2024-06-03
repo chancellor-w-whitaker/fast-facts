@@ -12,7 +12,7 @@
 
   --eku-maroon-color: #861f41;
 
-  --my-recharts-font-size: 12px;
+  --my-recharts-font-size: 11px;
 
   --speech-font-size: 1.25rem;
   --speech-font-color: #fff;
@@ -22,7 +22,7 @@
   --speech-padding: 0.5rem 1rem;
   --speech-border-radius: 0.5rem;
 
-  --callout-size: 10px;
+  --callout-size: 12px;
   --callout-placement-var-a: calc(-1 * var(--callout-size));
   --callout-placement-var-b: calc(50% - var(--callout-size));
 }
@@ -36,8 +36,8 @@ body {
 .bd-example-cssgrid [class*="grid"] > * {
   padding-top: var(--bd-example-padding-y);
   padding-bottom: var(--bd-example-padding-y);
-  background-color: rgba(var(--bd-violet-rgb), 0.15);
-  border: 1px solid rgba(var(--bd-violet-rgb), 0.3);
+  /* background-color: rgba(var(--bd-violet-rgb), 0.15); */
+  /* border: 1px solid rgba(var(--bd-violet-rgb), 0.3); */
 }
 
 .bg-eku-maroon {
