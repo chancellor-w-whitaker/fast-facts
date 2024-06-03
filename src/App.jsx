@@ -1,6 +1,7 @@
 import { useCallback, useState, Fragment, useMemo } from "react";
 
 import { updateDropdownItems } from "./js/updateDropdownItems";
+import { CustomBarChart } from "./components/CustomBarChart";
 import { MainContainer } from "./components/MainContainer";
 import { useResponseText } from "./hooks/useResponseText";
 import { NavDropdown } from "./components/NavDropdown";
@@ -13,7 +14,6 @@ import { EKULogo } from "./components/EKULogo";
 import { Section } from "./components/Section";
 import { dataFiles } from "./js/dataFiles";
 import { dataTypes } from "./js/dataTypes";
-import { Chart } from "./components/Chart";
 import { dataKeys } from "./js/dataKeys";
 import { Nav } from "./components/Nav";
 
@@ -66,10 +66,10 @@ function App() {
 
               return (
                 <Fragment key={id}>
-                  <h6 className="text-uppercase fw-bold">{title}</h6>
-                  <Chart
+                  <h5 className="text-uppercase fw-bold">{title}</h5>
+                  <CustomBarChart
                     {...{ valueFormatter, xAxisDataKey, barDataKey, data }}
-                  ></Chart>
+                  ></CustomBarChart>
                 </Fragment>
               );
             })}

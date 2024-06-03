@@ -7,42 +7,15 @@ import {
   Cell,
   Bar,
 } from "recharts";
-import { useMemo } from "react";
 
 import { getTooltipPositionPreTranslation } from "../js/getTooltipPositionPreTranslation";
 import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
 import { CustomTooltip } from "./CustomTooltip";
+import { getDomain } from "../js/getDomain";
 
-/*
-
-const domain = useMemo(() => {
-  const allValues = [
-    ...chartData.map(({ [delayedMeasure]: value }) => value),
-    ...chartData.map(({ prediction }) => prediction),
-  ];
-
-  const [min, max] = [Math.min(...allValues), Math.max(...allValues)];
-
-  const base = 2;
-
-  const power = Math.floor(getBaseLog(base, min));
-
-  const multiple = Math.pow(base, power);
-
-  const domain = [Math.floor(min / multiple) * multiple, "auto"];
-
-  return domain;
-}, [chartData, delayedMeasure]);
-
-function getBaseLog(x, y) {
-  return Math.log(y) / Math.log(x);
-}
-
-*/
-
-export const Chart = ({
-  activeBarColor = "#e6a65d",
-  barColor = "#009681",
+export const CustomBarChart = ({
+  activeBarColor = "#009681",
+  barColor = "purple",
   valueFormatter,
   xAxisDataKey,
   height = 300,
@@ -60,29 +33,36 @@ export const Chart = ({
 
   const tooltipActive = activeBarWidth > 0;
 
-  const tooltipPosition = useMemo(
-    () =>
-      getTooltipPositionPreTranslation(activeBarWidth, activeBarX, activeBarY),
-    [activeBarWidth, activeBarX, activeBarY]
+  const tooltipPosition = getTooltipPositionPreTranslation(
+    activeBarWidth,
+    activeBarX,
+    activeBarY
   );
 
-  const barLabel = useMemo(
-    () => ({
-      formatter: valueFormatter,
-      position: "insideTop",
-      fill: "white",
-    }),
-    [valueFormatter]
-  );
+  const barLabel = {
+    formatter: valueFormatter,
+    position: "insideTop",
+    fillOpacity: 1,
+    fill: "white",
+  };
 
   const fillCell = (payload) =>
     isActiveBar(payload) ? activeBarColor : barColor;
+
+  const yValues = data.map(({ [barDataKey]: value }) => value);
+
+  const yAxisDomain = getDomain(yValues);
+
+  const [lowerBound, upperBound] = yAxisDomain;
+
+  const getFillOpacity = (yValue) =>
+    (yValue - lowerBound) / (upperBound - lowerBound);
 
   return (
     <ResponsiveContainer height={height}>
       <BarChart data={data}>
         <XAxis dataKey={xAxisDataKey} />
-        <YAxis tickFormatter={valueFormatter} />
+        <YAxis tickFormatter={valueFormatter} domain={yAxisDomain} />
         <Tooltip
           content={<CustomTooltip></CustomTooltip>}
           formatter={valueFormatter}
@@ -92,7 +72,13 @@ export const Chart = ({
         ></Tooltip>
         <Bar {...trackMouseOverBar} dataKey={barDataKey} label={barLabel}>
           {data.map((payload, index) => (
-            <Cell fill={fillCell(payload)} key={`cell-${index}`} />
+            <Cell
+              fillOpacity={
+                !isActiveBar(payload) ? getFillOpacity(payload[barDataKey]) : 1
+              }
+              fill={fillCell(payload)}
+              key={`cell-${index}`}
+            />
           ))}
         </Bar>
       </BarChart>
