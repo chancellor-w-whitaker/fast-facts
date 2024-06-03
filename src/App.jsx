@@ -20,8 +20,8 @@ import { Nav } from "./components/Nav";
 // ? find all caps font
 // ! put in template
 // ! move dropdown to middle or left
-// ! make sure numbers fit in bar well
-// ! would it be possible to set the position of the tooltip instead?
+// * make sure numbers fit in bar well (font size is 12px; decrease to 10px if necessary)
+// * would it be possible to set the position of the tooltip instead?
 
 function App() {
   const [fileID, setFileID] = useState(initialFileID);
@@ -64,23 +64,11 @@ function App() {
 
               const valueFormatter = valueFormatters[numberType];
 
-              const barLabel = {
-                formatter: valueFormatter,
-                position: "insideTop",
-                fill: "white",
-              };
-
               return (
                 <Fragment key={id}>
                   <h6 className="text-uppercase fw-bold">{title}</h6>
                   <Chart
-                    {...{
-                      valueFormatter,
-                      xAxisDataKey,
-                      barDataKey,
-                      barLabel,
-                      data,
-                    }}
+                    {...{ valueFormatter, xAxisDataKey, barDataKey, data }}
                   ></Chart>
                 </Fragment>
               );

@@ -14,11 +14,15 @@
 
   --my-recharts-font-size: 12px;
 
-  --speech-font-size: 1.2em;
+  --speech-font-size: 1.25rem;
   --speech-font-color: #fff;
-  --speech-bg-color: #a53d38;
+  --speech-bg-color: #dc5829;
 
-  --callout-size: 15px;
+  --speech-width: max-content;
+  --speech-padding: 0.5rem 1rem;
+  --speech-border-radius: 0.5rem;
+
+  --callout-size: 10px;
   --callout-placement-var-a: calc(-1 * var(--callout-size));
   --callout-placement-var-b: calc(50% - var(--callout-size));
 }
@@ -57,9 +61,9 @@ body {
   font-size: var(--speech-font-size);
 
   /* ? (A2) DIMENSIONS */
-  padding: 20px;
-  max-width: 600px;
-  border-radius: 10px;
+  width: var(--speech-width);
+  padding: var(--speech-padding);
+  border-radius: var(--speech-border-radius);
 }
 
 /* ! (B) USE ::AFTER TO CREATE THE "CALLOUT" */
@@ -120,6 +124,6 @@ body {
   top: var(--callout-placement-var-b);
 }
 
-.speech.down.offset-callout {
+.speech.down.translate-up-callout-size {
   transform: translateY(var(--callout-placement-var-a));
 }

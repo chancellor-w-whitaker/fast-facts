@@ -9,7 +9,7 @@ export const useMouseOverRechartsBar = () => {
 
   const onMouseOut = useCallback(() => setEvent({ payload: {} }), []);
 
-  const isMouseOverBar = useCallback(
+  const isActiveBar = useCallback(
     (payload) => payload === eventPayload,
     [eventPayload]
   );
@@ -17,6 +17,6 @@ export const useMouseOverRechartsBar = () => {
   return {
     trackMouseOverBar: { onMouseOver, onMouseOut },
     mouseOverBarEvent: event,
-    isMouseOverBar,
+    isActiveBar,
   };
 };

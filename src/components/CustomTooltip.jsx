@@ -1,21 +1,68 @@
-export const CustomTooltip = ({ payload, active, label }) => {
+export const CustomTooltip = (props) => {
+  const { formatter, payload, active, label } = props;
+
   if (active && payload && payload.length) {
     return (
       <>
         <div className="translate-left-50-up-100">
-          <div className="speech down offset-callout">{label}</div>
+          <div className="speech down translate-up-callout-size text-center">
+            <div>{label}</div>
+            {payload.map(({ value }, index) => (
+              <div key={index}>{formatter(value)}</div>
+            ))}
+          </div>
         </div>
-        {/* <div
-            style={{ transform: "translate(-50%, -100%)" }}
-            className="tooltip-inner shadow-sm"
-          >
-            <p className="label">{`${label} : ${payload[0].value}`}</p>
-            <p className="intro">{label}</p>
-            <p className="desc m-0">Anything you want can be displayed here.</p>
-          </div> */}
       </>
     );
   }
 
   return null;
+};
+
+const DefaultTooltip = ({ label = "Label", itemList = [{}] }) => {
+  return (
+    <>
+      <div
+        style={{
+          border: "1px solid rgb(204, 204, 204)",
+          backgroundColor: "rgb(255, 255, 255)",
+          whiteSpace: "nowrap",
+          padding: 10,
+          margin: 0,
+        }}
+        className="recharts-default-tooltip"
+      >
+        <p className="recharts-tooltip-label" style={{ margin: 0 }}>
+          {label}
+        </p>
+        <ul
+          className="recharts-tooltip-item-list"
+          style={{ padding: 0, margin: 0 }}
+        >
+          {itemList.map(
+            (
+              { separator = ":", value = "value", name = "name", unit = "" },
+              index
+            ) => (
+              <li
+                style={{
+                  color: "rgb(136, 132, 216)",
+                  display: "block",
+                  paddingBottom: 4,
+                  paddingTop: 4,
+                }}
+                className="recharts-tooltip-item"
+                key={index}
+              >
+                <span className="recharts-tooltip-item-name">{name}</span>
+                <span className="recharts-tooltip-item-separator">{` ${separator} `}</span>
+                <span className="recharts-tooltip-item-value">{value}</span>
+                <span className="recharts-tooltip-item-unit">{unit}</span>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+    </>
+  );
 };
