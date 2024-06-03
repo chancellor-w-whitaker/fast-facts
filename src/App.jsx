@@ -18,10 +18,10 @@ import { dataKeys } from "./js/dataKeys";
 import { Nav } from "./components/Nav";
 
 // ? find all caps font
+
 // ! put in template
 // ! move dropdown to middle or left
-// * make sure numbers fit in bar well (font size is 12px; decrease to 10px if necessary)
-// * would it be possible to set the position of the tooltip instead?
+// ! fix font size issues on smaller screens
 
 function App() {
   const [fileID, setFileID] = useState(initialFileID);

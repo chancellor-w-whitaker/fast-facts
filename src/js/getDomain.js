@@ -11,10 +11,7 @@ export const getDomain = (values, base = 5) => {
 
   const multiple = Math.pow(base, power);
 
-  const domain = [
-    Math.floor(lower / multiple) * multiple,
-    Math.ceil(upper / multiple) * multiple,
-  ];
+  const domain = [Math.floor(lower / multiple) * multiple, "auto"];
 
   return domain;
 };

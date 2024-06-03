@@ -38,7 +38,7 @@ const tooltipCursor = { fill: "transparent" };
 
 export const CustomBarChart = ({
   activeBarColor = kentuckyBluegrass,
-  barColor = purple,
+  barColor = ekuMaroon,
   valueFormatter,
   xAxisDataKey,
   height = 250,
@@ -71,16 +71,18 @@ export const CustomBarChart = ({
 
   const yValues = data.map(({ [barDataKey]: value }) => value);
 
+  const minMax = [Math.min(...yValues), Math.max(...yValues)];
+
   const yAxisDomain = getDomain(yValues);
 
   const fillCell = (payload) => {
     const value = payload[barDataKey];
 
-    const normalizedValue = normalizeValue(value, ...yAxisDomain);
+    const normalizedValue = normalizeValue(value, ...minMax);
 
     const dimPercentage = 1 - normalizedValue;
 
-    const dimmedColor = pSBC(dimPercentage, barColor);
+    const dimmedColor = pSBC(dimPercentage, barColor, darkGray);
 
     return isActiveBar(payload)
       ? activeBarColor
@@ -92,7 +94,7 @@ export const CustomBarChart = ({
   const getFillOpacity = (payload) => {
     const value = payload[barDataKey];
 
-    const normalizedValue = normalizeValue(value, ...yAxisDomain);
+    const normalizedValue = normalizeValue(value, ...minMax);
 
     return tryGradient
       ? 1
@@ -104,8 +106,12 @@ export const CustomBarChart = ({
   return (
     <ResponsiveContainer height={height}>
       <BarChart data={data}>
-        <XAxis dataKey={xAxisDataKey} />
-        <YAxis tickFormatter={valueFormatter} domain={yAxisDomain} />
+        <XAxis dataKey={xAxisDataKey} stroke={solidBlack} />
+        <YAxis
+          tickFormatter={valueFormatter}
+          domain={yAxisDomain}
+          stroke={solidBlack}
+        />
         <Tooltip
           content={<CustomTooltip></CustomTooltip>}
           formatter={valueFormatter}
