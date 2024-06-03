@@ -1,115 +1,125 @@
-body {
+:root,
+[data-bs-theme="light"] {
+  --bs-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  --bs-box-shadow-sm: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  --bs-box-shadow-lg: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+
+  --bd-example-padding-y: 0.75rem;
+  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+  --eku-maroon-color: #861f41;
+
+  --my-recharts-font-size: 12px;
+
+  --speech-font-size: 1.2em;
+  --speech-font-color: #fff;
+  --speech-bg-color: #a53d38;
+
   --callout-size: 15px;
-}
-
-.bg-eku-maroon {
-  background-color: #861f41;
-}
-
-.shadow-none {
-  box-shadow: none !important;
-}
-
-.shadow-sm {
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
-}
-
-.shadow {
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-}
-
-.shadow-lg {
-  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12) !important;
-}
-
-.bd-example-row [class^="col"],
-.bd-example-cols [class^="col"] > *,
-.bd-example-cssgrid [class*="grid"] > * {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background-color: rgba(112.520718, 44.062154, 249.437846, 0.15);
-  border: 1px solid rgba(112.520718, 44.062154, 249.437846, 0.3);
-}
-
-.recharts-surface {
-  overflow: visible;
-  font-size: 12px;
+  --callout-placement-var-a: calc(-1 * var(--callout-size));
+  --callout-placement-var-b: calc(50% - var(--callout-size));
 }
 
 body {
   overflow-y: scroll;
 }
 
-.recharts-tooltip-translation {
+.bd-example-row [class^="col"],
+.bd-example-cols [class^="col"] > *,
+.bd-example-cssgrid [class*="grid"] > * {
+  padding-top: var(--bd-example-padding-y);
+  padding-bottom: var(--bd-example-padding-y);
+  background-color: rgba(var(--bd-violet-rgb), 0.15);
+  border: 1px solid rgba(var(--bd-violet-rgb), 0.3);
+}
+
+.bg-eku-maroon {
+  background-color: var(--eku-maroon-color);
+}
+
+.recharts-surface {
+  overflow: visible;
+  font-size: var(--my-recharts-font-size);
+}
+
+.translate-left-50-up-100 {
   transform: translate(-50%, -100%);
 }
 
-/* (A) SPEECH BOX */
+/* ! (A) SPEECH BOX */
 .speech {
-  /* (A1) FONT & COLORS */
-  font-size: 1.2em;
-  color: #fff;
-  background: #a53d38;
+  /* ? (A1) FONT & COLORS */
+  color: var(--speech-font-color);
+  background: var(--speech-bg-color);
+  font-size: var(--speech-font-size);
 
-  /* (A2) DIMENSIONS */
+  /* ? (A2) DIMENSIONS */
   padding: 20px;
-  border-radius: 10px;
   max-width: 600px;
+  border-radius: 10px;
 }
 
-/* (B) USE ::AFTER TO CREATE THE "CALLOUT" */
+/* ! (B) USE ::AFTER TO CREATE THE "CALLOUT" */
 .speech::after {
-  display: block;
   width: 0;
   content: "";
+  display: block;
   border: var(--callout-size) solid transparent;
 }
 
-/* (C) "CALLOUT" DIRECTIONS */
+/* ! (C) "CALLOUT" DIRECTIONS */
 .speech.up::after {
-  border-bottom-color: #a53d38;
+  border-bottom-color: var(--speech-bg-color);
   border-top: 0;
 }
+
 .speech.down::after {
-  border-top-color: #a53d38;
+  border-top-color: var(--speech-bg-color);
   border-bottom: 0;
 }
+
 .speech.left::after {
-  border-right-color: #a53d38;
+  border-right-color: var(--speech-bg-color);
   border-left: 0;
 }
+
 .speech.right::after {
-  border-left-color: #a53d38;
+  border-left-color: var(--speech-bg-color);
   border-right: 0;
 }
 
-/* (D) POSITION THE CALLOUT */
+/* ! (D) POSITION THE CALLOUT */
 .speech {
   position: relative;
-  /* margin: 30px; */
 }
+
 .speech::after {
   position: absolute;
 }
+
 .speech.up::after {
-  top: calc(-1 * var(--callout-size));
-  left: calc(50% - var(--callout-size));
+  top: var(--callout-placement-var-a);
+  left: var(--callout-placement-var-b);
 }
+
 .speech.down::after {
-  bottom: calc(-1 * var(--callout-size));
-  left: calc(50% - var(--callout-size));
+  bottom: var(--callout-placement-var-a);
+  left: var(--callout-placement-var-b);
 }
+
 .speech.left::after {
-  left: calc(-1 * var(--callout-size));
-  top: calc(50% - var(--callout-size));
+  left: var(--callout-placement-var-a);
+  top: var(--callout-placement-var-b);
 }
+
 .speech.right::after {
-  right: calc(-1 * var(--callout-size));
-  top: calc(50% - var(--callout-size));
+  right: var(--callout-placement-var-a);
+  top: var(--callout-placement-var-b);
 }
+
 .speech.down.offset-callout {
-  transform: translateY(calc(-1 * var(--callout-size)));
+  transform: translateY(var(--callout-placement-var-a));
 }

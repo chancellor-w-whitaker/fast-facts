@@ -1,6 +1,5 @@
 import {
   ResponsiveContainer,
-  LabelList,
   BarChart,
   Tooltip,
   YAxis,
@@ -8,7 +7,6 @@ import {
   Cell,
   Bar,
 } from "recharts";
-import { useCallback } from "react";
 
 import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
 import { CustomTooltip } from "./CustomTooltip";
@@ -28,12 +26,12 @@ export const Chart = ({
 
   const tooltipPosition = { x: x + width / 2, y };
 
-  const applyLabelToMouseOverBar = useCallback(
-    ({ [xAxisDataKey]: xAxisValue, payload }) => {
-      if (isMouseOverBar(payload)) return xAxisValue;
-    },
-    [xAxisDataKey, isMouseOverBar]
-  );
+  // const applyLabelToMouseOverBar = useCallback(
+  //   ({ [xAxisDataKey]: xAxisValue, payload }) => {
+  //     if (isMouseOverBar(payload)) return xAxisValue;
+  //   },
+  //   [xAxisDataKey, isMouseOverBar]
+  // );
 
   const fillCell = (payload) =>
     isMouseOverBar(payload) ? "#82ca9d" : "#8884d8";
@@ -54,7 +52,7 @@ export const Chart = ({
           {data.map((payload, index) => (
             <Cell fill={fillCell(payload)} key={`cell-${index}`} />
           ))}
-          <LabelList valueAccessor={applyLabelToMouseOverBar} position="top" />
+          {/* <LabelList valueAccessor={applyLabelToMouseOverBar} position="top" /> */}
         </Bar>
       </BarChart>
     </ResponsiveContainer>

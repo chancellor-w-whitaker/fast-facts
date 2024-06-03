@@ -2,8 +2,8 @@ export const CustomTooltip = ({ payload, active, label }) => {
   if (active && payload && payload.length) {
     return (
       <>
-        <div className="recharts-tooltip-translation">
-          <div className="speech down offset-callout">Hello World!</div>
+        <div className="translate-left-50-up-100">
+          <div className="speech down offset-callout">{label}</div>
         </div>
         {/* <div
             style={{ transform: "translate(-50%, -100%)" }}
