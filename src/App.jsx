@@ -21,7 +21,6 @@ import { Nav } from "./components/Nav";
 
 // ! put in template
 // ! move dropdown to middle or left
-// ! logic for including desc property
 
 function App() {
   const [fileID, setFileID] = useState(initialFileID);
@@ -42,8 +41,6 @@ function App() {
     () => [{ span: 1 }, { breakpoint: "lg", span: 2 }],
     []
   );
-
-  console.log(chartsData);
 
   return (
     <>
