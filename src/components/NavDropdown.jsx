@@ -18,7 +18,7 @@ export const NavDropdown = ({ onItemClick, items = [], children }) => {
   return (
     <li className="nav-item dropdown">
       <a
-        className="nav-link text-light fs-5 dropdown-toggle"
+        className="nav-link text-light fs-4 dropdown-toggle"
         onClick={open}
         role="button"
         href="#"

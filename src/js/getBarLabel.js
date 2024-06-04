@@ -1,5 +1,5 @@
 export const getBarLabel = ({
-  breakpointWidth = 600,
+  breakpointWidth = 550,
   containerWidth = 0,
   formatter,
 }) => {

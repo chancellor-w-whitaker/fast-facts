@@ -21,6 +21,7 @@ import { Nav } from "./components/Nav";
 
 // ! put in template
 // ! move dropdown to middle or left
+// ! fix tooltip oob
 
 function App() {
   const [fileID, setFileID] = useState(initialFileID);
@@ -47,6 +48,7 @@ function App() {
       <MainContainer>
         <BrandBar>
           <EKULogo></EKULogo>
+          <span className="fs-4 me-3">Fast Facts</span>
           <Nav>
             <NavDropdown
               onItemClick={onDropdownItemClick}

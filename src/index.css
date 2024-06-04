@@ -31,6 +31,22 @@ body {
   overflow-y: scroll;
 }
 
+.page > div {
+  margin: 0 !important;
+}
+
+.page.offset-xxl-1 {
+  margin-left: 0;
+}
+
+.page.col-xxl-10 {
+  width: 100%;
+}
+
+/* .eastern-header {
+  background-color: var(--eku-maroon-color) !important;
+} */
+
 .bd-example-row [class^="col"],
 .bd-example-cols [class^="col"] > *,
 .bd-example-cssgrid [class*="grid"] > * {
