@@ -10,25 +10,25 @@ import {
 
 import { getTooltipPositionPreTranslation } from "../js/getTooltipPositionPreTranslation";
 import { useMouseOverRechartsBar } from "../hooks/useMouseOverRechartsBar";
+import { getTicksAndDomain } from "../js/getTicksAndDomain";
 import { normalizeValue } from "../js/normalizeValue";
 import { CustomTooltip } from "./CustomTooltip";
 import { brandColors } from "../js/brandColors";
-import { getDomain } from "../js/getDomain";
 import { pSBC } from "../js/pSBC";
 
 const {
   kentuckyBluegrass,
-  goldenrodYellow,
-  autumnOrange,
-  booneBronze,
+  // goldenrodYellow,
+  // autumnOrange,
+  // booneBronze,
   solidWhite,
   solidBlack,
   ekuMaroon,
-  lightGray,
+  // lightGray,
   darkGray,
 } = brandColors;
 
-const purple = "#800080";
+// const purple = "#800080";
 
 const tryGradient = true;
 
@@ -45,23 +45,6 @@ export const CustomBarChart = ({
   barDataKey,
   data,
 }) => {
-  const { trackMouseOverBar, mouseOverBarEvent, isActiveBar } =
-    useMouseOverRechartsBar();
-
-  const {
-    width: activeBarWidth = 0,
-    x: activeBarX = 0,
-    y: activeBarY = 0,
-  } = mouseOverBarEvent;
-
-  const tooltipActive = activeBarWidth > 0;
-
-  const tooltipPosition = getTooltipPositionPreTranslation(
-    activeBarWidth,
-    activeBarX,
-    activeBarY
-  );
-
   const barLabel = {
     position: barLabelPosition,
     formatter: valueFormatter,
@@ -71,30 +54,35 @@ export const CustomBarChart = ({
 
   const yValues = data.map(({ [barDataKey]: value }) => value);
 
-  const minMax = [Math.min(...yValues), Math.max(...yValues)];
+  const [dataMin, dataMax] = [Math.min(...yValues), Math.max(...yValues)];
 
-  const yAxisDomain = getDomain(yValues);
+  const { domain: yAxisDomain, ticks: yAxisTicks } = getTicksAndDomain({
+    dataValues: yValues,
+  });
+
+  const { trackMouseOverBar, mouseOverBarEvent, isActiveBar } =
+    useMouseOverRechartsBar();
 
   const fillCell = (payload) => {
     const value = payload[barDataKey];
 
-    const normalizedValue = normalizeValue(value, ...minMax);
+    const normalizedValue = normalizeValue(value, dataMin, dataMax);
 
-    const dimPercentage = 1 - normalizedValue;
+    const tweakPercentage = 1 - normalizedValue;
 
-    const dimmedColor = pSBC(dimPercentage, barColor, darkGray);
+    const tweakedColor = pSBC(tweakPercentage, barColor, darkGray);
 
     return isActiveBar(payload)
       ? activeBarColor
       : tryGradient
-      ? dimmedColor
+      ? tweakedColor
       : barColor;
   };
 
   const getFillOpacity = (payload) => {
     const value = payload[barDataKey];
 
-    const normalizedValue = normalizeValue(value, ...minMax);
+    const normalizedValue = normalizeValue(value, dataMin, dataMax);
 
     return tryGradient
       ? 1
@@ -102,6 +90,17 @@ export const CustomBarChart = ({
       ? activeBarColor
       : normalizedValue;
   };
+
+  const {
+    width: activeBarWidth = 0,
+    x: activeBarX = 0,
+    y: activeBarY = 0,
+  } = mouseOverBarEvent;
+
+  const [tooltipPosition, tooltipActive] = [
+    getTooltipPositionPreTranslation(activeBarWidth, activeBarX, activeBarY),
+    activeBarWidth > 0,
+  ];
 
   return (
     <ResponsiveContainer height={height}>
@@ -111,6 +110,7 @@ export const CustomBarChart = ({
           tickFormatter={valueFormatter}
           domain={yAxisDomain}
           stroke={solidBlack}
+          ticks={yAxisTicks}
         />
         <Tooltip
           content={<CustomTooltip></CustomTooltip>}
