@@ -41,6 +41,7 @@ export const CustomBarChart = ({
 
   const { domain: yAxisDomain, ticks: yAxisTicks } = getTicksAndDomain({
     dataValues: yValues,
+    tickCount: 6,
   });
 
   const { trackMouseOverBar, mouseOverBarEvent, isActiveBar } =

@@ -9,8 +9,10 @@ const getFirstMultipleOfXFollowingY = ({ y, x }) => {
 };
 
 const getNextNumberFollowingXDivisibleByY = ({ x, y }) => {
-  return x + (y - (x % y));
+  return x % y === 0 ? x : x + (y - (x % y));
 };
+
+// console.log(getNextNumberFollowingXDivisibleByY({ x: 16, y: 4 }));
 
 const getSecondLargestPowerOfXInY = ({ x, y }) => {
   const flooredXLogOfY = Math.floor(getBaseLog(x, y)) - 1;

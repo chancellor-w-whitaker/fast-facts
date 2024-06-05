@@ -47,8 +47,6 @@ function App() {
     <>
       <MainContainer>
         <BrandBar>
-          <EKULogo></EKULogo>
-          <span className="fs-4 me-3">Fast Facts</span>
           <Nav>
             <NavDropdown
               onItemClick={onDropdownItemClick}
@@ -57,6 +55,8 @@ function App() {
               {title}
             </NavDropdown>
           </Nav>
+          {/* <EKULogo></EKULogo> */}
+          {/* <span className="fs-4 me-3">Fast Facts</span> */}
         </BrandBar>
         <Section>
           <RowColsGrid className="bd-example-row" rowCols={rowCols}>

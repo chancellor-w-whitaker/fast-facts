@@ -26,7 +26,7 @@ export const NavDropdown = ({ onItemClick, items = [], children }) => {
         {children}
       </a>
       {isOpen && (
-        <ul className="dropdown-menu shadow-sm show end-0" ref={popover}>
+        <ul className="dropdown-menu shadow-sm show" ref={popover}>
           {items.map(({ children, active, id }) => (
             <li onClick={() => onItemClick(id)} key={id}>
               <DropdownItem active={active}>{children}</DropdownItem>
