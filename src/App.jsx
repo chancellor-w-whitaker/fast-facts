@@ -12,6 +12,7 @@ import { initialFileID } from "./js/initialFileID";
 import { BrandBar } from "./components/BrandBar";
 import { EKULogo } from "./components/EKULogo";
 import { Section } from "./components/Section";
+import { Wrapper } from "./components/Wrapper";
 import { dataFiles } from "./js/dataFiles";
 import { dataTypes } from "./js/dataTypes";
 import { dataKeys } from "./js/dataKeys";
@@ -44,40 +45,35 @@ function App() {
   );
 
   return (
-    <>
-      <MainContainer>
-        <BrandBar>
-          <Nav>
-            <NavDropdown
-              onItemClick={onDropdownItemClick}
-              items={dropdownItems}
-            >
-              {title}
-            </NavDropdown>
-          </Nav>
-          {/* <EKULogo></EKULogo> */}
-          {/* <span className="fs-4 me-3">Fast Facts</span> */}
-        </BrandBar>
-        <Section>
-          <RowColsGrid className="bd-example-row" rowCols={rowCols}>
-            {chartsData.map(({ title, data, id }) => {
-              const { numberType } = dataTypes[id];
+    <Wrapper heading="Fast Facts">
+      <BrandBar>
+        <Nav>
+          <NavDropdown onItemClick={onDropdownItemClick} items={dropdownItems}>
+            {title}
+          </NavDropdown>
+        </Nav>
+        {/* <EKULogo></EKULogo> */}
+        {/* <span className="fs-4 me-3">Fast Facts</span> */}
+      </BrandBar>
+      <div>
+        <RowColsGrid className="bd-example-row" rowCols={rowCols}>
+          {chartsData.map(({ title, data, id }) => {
+            const { numberType } = dataTypes[id];
 
-              const valueFormatter = valueFormatters[numberType];
+            const valueFormatter = valueFormatters[numberType];
 
-              return (
-                <Fragment key={id}>
-                  <h6 className="text-uppercase fw-bold">{title}</h6>
-                  <CustomBarChart
-                    {...{ valueFormatter, xAxisDataKey, barDataKey, data }}
-                  ></CustomBarChart>
-                </Fragment>
-              );
-            })}
-          </RowColsGrid>
-        </Section>
-      </MainContainer>
-    </>
+            return (
+              <Fragment key={id}>
+                <h6 className="text-uppercase fw-bold">{title}</h6>
+                <CustomBarChart
+                  {...{ valueFormatter, xAxisDataKey, barDataKey, data }}
+                ></CustomBarChart>
+              </Fragment>
+            );
+          })}
+        </RowColsGrid>
+      </div>
+    </Wrapper>
   );
 }
 
